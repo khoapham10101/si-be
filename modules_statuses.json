@@ -1,0 +1,10 @@
+{
+    "Auth": true,
+    "User": true,
+    "Role": true,
+    "Permission": true,
+    "UserRole": true,
+    "UserStatus": true,
+    "Gender": true,
+    "GlobalStatus": true
+}

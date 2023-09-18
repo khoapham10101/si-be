@@ -1,0 +1,11 @@
+{
+    "name": "Gender",
+    "alias": "gender",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Gender\\Providers\\GenderServiceProvider"
+    ],
+    "files": []
+}

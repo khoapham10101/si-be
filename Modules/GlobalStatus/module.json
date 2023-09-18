@@ -1,0 +1,11 @@
+{
+    "name": "GlobalStatus",
+    "alias": "globalstatus",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\GlobalStatus\\Providers\\GlobalStatusServiceProvider"
+    ],
+    "files": []
+}
