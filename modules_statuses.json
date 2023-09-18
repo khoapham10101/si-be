@@ -6,5 +6,6 @@
     "UserRole": true,
     "UserStatus": true,
     "Gender": true,
-    "GlobalStatus": true
+    "GlobalStatus": true,
+    "Brand": true
 }
