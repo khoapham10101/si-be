@@ -16,9 +16,9 @@ class RoleDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (Role::query()->exists()) {
-            return;
-        }
+        // if (Role::query()->exists()) {
+        //     return;
+        // }
 
         collect([
             'admin',

@@ -58,6 +58,8 @@ return [
 
     'asset_url' => env('ASSET_URL'),
 
+    'url_image' => env('APP_IMAGE_PATH', 'http://127.0.0.1:8000/storage/'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
