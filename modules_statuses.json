@@ -7,5 +7,6 @@
     "UserStatus": true,
     "Gender": true,
     "GlobalStatus": true,
-    "Brand": true
+    "Brand": true,
+    "Product": true
 }

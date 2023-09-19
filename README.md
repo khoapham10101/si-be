@@ -10,3 +10,4 @@
 8. Run ```php artisan module:seed Gender``` to seeding default data for default Gender table
 9. Run ```php artisan module:seed Role``` to seeding default data for default Role table
 10. Run ```php artisan module:seed User``` to seeding default data for default User table
+11. Run ```php artisan storage:link```  to save files for public
