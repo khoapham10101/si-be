@@ -1,0 +1,53 @@
+version: "3"
+services:
+    www:
+        build:
+          context: ./apache-php
+          args:
+              - WITH_XDEBUG=false
+        ports:
+            - "8071:80"
+        env_file: .env.docker
+        # environment:
+        #     XDEBUG_CONFIG: "remote_host=localhost remote_connect_back=1"
+        #     PHP_IDE_CONFIG: "serverName=localhost"
+        volumes:
+            - ./:/var/www/html
+        links:
+            - db
+        networks:
+            - si-network
+    db:
+        image: mysql
+        restart: always
+        ports:
+            - "3374:3306"
+        environment:
+            MYSQL_DATABASE: si
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - ./dump:/docker-entrypoint-initdb.d
+            - ./data:/var/lib/mysql
+        networks:
+            - si-network
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db:db
+        ports:
+            - 8075:80
+        environment:
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+            MYSQL_ROOT_PASSWORD: root
+        networks:
+            - si-network
+
+volumes:
+    persistent:
+
+networks:
+    si-network:
+        driver: bridge
