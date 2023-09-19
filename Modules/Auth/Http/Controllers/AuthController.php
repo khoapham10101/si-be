@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Auth\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Entities\User as EntitiesUser;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -16,8 +17,11 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         // Check email
-        $user = EntitiesUser::where('email', $request->email)->first();
-
+        // $user = EntitiesUser::where('email', $request->email)->first();
+        $user = Cache::remember('user:' . $request->email, now()->addMinutes(30), function () use ($request) {
+            return EntitiesUser::where('email', $request->email)->first();
+        });
+             
         // Check password
         if(!$user || !Hash::check($request->password, $user->password)) {
             return $this->errorResponse('Bad creds', 401);

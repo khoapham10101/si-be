@@ -44,6 +44,14 @@ services:
             MYSQL_ROOT_PASSWORD: root
         networks:
             - si-network
+    redis:
+        image: redis:latest
+        ports:
+        - "6399:6379"
+        volumes:
+        - ./redis:/data
+        networks:
+            - si-network
 
 volumes:
     persistent:
