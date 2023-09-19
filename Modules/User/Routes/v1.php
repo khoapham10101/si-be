@@ -21,6 +21,7 @@ Route::group([
         Route::prefix('/users')->controller(UserController::class)->group(function () {
             Route::post('/', 'index')->middleware('can:admin.users.index');
             Route::post('/create', 'store')->name('Create User')->middleware('can:admin.users.create');
+            Route::get('/single/{userId}', 'show');
             Route::patch('/update/{userId}', 'update')->name('Update User')->middleware('can:admin.users.edit');
             Route::delete('/delete/{userId}', 'delete')->name('Delete User')->middleware('can:admin.users.destroy');
         });

@@ -32,6 +32,20 @@ class UserController extends Controller
     }
 
     /**
+     * Get single user
+     *
+     * @return JsonResponse
+     */
+    public function show($userId, UserRepository $userRepository)
+    {
+        $user = $userRepository->getQuery()->find($userId);
+        if (!$user) {
+            return response()->json(['message' => sprintf('User %s not found', $userId)], 404);
+        }
+        return response()->json(UserResource::make($user));
+    }
+
+    /**
      * Create a new User
      *
      * @return JsonResponse
