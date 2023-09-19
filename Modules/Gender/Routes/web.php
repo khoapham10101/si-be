@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('gender')->group(function() {
-    Route::get('/', 'GenderController@index');
-});
+// Route::prefix('gender')->group(function() {
+//     Route::get('/', 'GenderController@index');
+// });

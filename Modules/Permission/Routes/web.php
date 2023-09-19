@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('permission')->group(function() {
-    Route::get('/', 'PermissionController@index');
-});
+// Route::prefix('permission')->group(function() {
+//     Route::get('/', 'PermissionController@index');
+// });

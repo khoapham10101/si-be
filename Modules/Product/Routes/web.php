@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('product')->group(function() {
-    Route::get('/', 'ProductController@index');
-});
+// Route::prefix('product')->group(function() {
+//     Route::get('/', 'ProductController@index');
+// });

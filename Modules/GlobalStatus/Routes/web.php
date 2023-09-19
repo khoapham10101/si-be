@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('globalstatus')->group(function() {
-    Route::get('/', 'GlobalStatusController@index');
-});
+// Route::prefix('globalstatus')->group(function() {
+//     Route::get('/', 'GlobalStatusController@index');
+// });

@@ -31,7 +31,7 @@ class UserUpdate extends FormRequest
             'last_name' => 'sometimes|required|string',
             'id_card' => 'required|string',
             'birthday' => 'nullable|date',
-            'gender' => 'nullable|numeric',
+            'gender_id' => 'nullable|numeric',
             'id_1' => 'nullable|string',
             'id_2' => 'nullable|string',
             'avatar' => 'nullable|string',

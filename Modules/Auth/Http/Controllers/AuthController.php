@@ -9,6 +9,9 @@ use Modules\Auth\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Modules\User\Entities\User as EntitiesUser;
 use Illuminate\Support\Facades\Cache;
+use Modules\Auth\Http\Requests\RegisterRequest;
+use Modules\Auth\Repositories\AuthRepository;
+use Modules\User\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -21,7 +24,7 @@ class AuthController extends Controller
         $user = Cache::remember('user:' . $request->email, now()->addMinutes(30), function () use ($request) {
             return EntitiesUser::where('email', $request->email)->first();
         });
-             
+
         // Check password
         if(!$user || !Hash::check($request->password, $user->password)) {
             return $this->errorResponse('Bad creds', 401);
@@ -44,6 +47,16 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
         return $this->successResponse([
             'message' => 'You have been successfully logged out!'
+        ]);
+    }
+
+    public function register(RegisterRequest $request, AuthRepository $authRepository)
+    {
+        $data = $request->validated();
+        $user = $authRepository->register($data);
+
+        return $this->successResponse([
+            'user' => UserResource::make($user)
         ]);
     }
 }
