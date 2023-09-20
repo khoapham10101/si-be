@@ -5,6 +5,7 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\User\Http\Requests\UserCreate;
 use Modules\User\Http\Requests\UserList;
 use Modules\User\Http\Requests\UserUpdate;

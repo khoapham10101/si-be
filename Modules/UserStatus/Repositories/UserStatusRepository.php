@@ -4,6 +4,7 @@ namespace Modules\UserStatus\Repositories;
 
 use App\Repositories\BaseRepository;
 use Modules\UserStatus\Entities\UserStatus;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserStatusRepository extends BaseRepository
 {

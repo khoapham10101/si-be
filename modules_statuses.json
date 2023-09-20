@@ -8,5 +8,6 @@
     "Gender": true,
     "GlobalStatus": true,
     "Brand": true,
-    "Product": true
+    "Product": true,
+    "Wishlist": true
 }
