@@ -4,6 +4,7 @@ namespace Modules\Product\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Modules\Brand\Entities\Brand;
 use Modules\Product\Entities\Product;
 
 class CreateProductRequest extends FormRequest
@@ -23,11 +24,15 @@ class CreateProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Product $product)
+    public function rules(Product $product, Brand $brand)
     {
         return [
             'name' => 'required|string',
-            'brand_id' => 'required|numeric',
+            'brand_id' => [
+                'required',
+                'numeric',
+                Rule::exists($brand->getTable(), $brand->getKeyName())->withoutTrashed(),
+            ],
             'sku' => [
                 'required',
                 'string',

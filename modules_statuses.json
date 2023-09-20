@@ -9,5 +9,6 @@
     "GlobalStatus": true,
     "Brand": true,
     "Product": true,
-    "Wishlist": true
+    "Wishlist": true,
+    "Cart": true
 }
