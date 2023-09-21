@@ -29,7 +29,7 @@ class ProductRepository extends BaseRepository
         $product = new Product;
 
         $this->updateData($product, $data);
-        if ($data['images']) {
+        if (isset($data['images']) && $data['images']) {
             $dataFiles = [];
             foreach ($data['images'] as $file) {
                 $path = Storage::disk('public')->put(Product::PATH_FILE, $file);
