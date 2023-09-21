@@ -28,5 +28,12 @@ Route::group([
             Route::delete('/delete/{productId}', 'delete')->name('Delete Product')->middleware('can:admin.products.destroy');
         });
     });
+
+    Route::group(['prefix' => 'public'], function () {
+        Route::prefix('/products')->controller(ProductController::class)->group(function () {
+            Route::post('/', 'index');
+            Route::get('/single/{productId}', 'show');
+        });
+    });
 });
 
