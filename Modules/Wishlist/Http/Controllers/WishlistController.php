@@ -41,12 +41,12 @@ class WishlistController extends Controller
     public function store(Request $request, WishlistRepository $wishlistRepository, $productId)
     {
         $product = Product::find($productId);
-        if ($product === null) {
+        if (is_null($product)) {
             return response()->json(['success' => false, 'message' => sprintf('Product %s not found', $productId)], 404);
         }
 
         $wishlist = $wishlistRepository->findByProductId(Auth::user()->id, $productId);
-        if ($wishlist !== null) {
+        if (!is_null($wishlist)) {
             return response()->json(['success' => false, 'message' => 'Product already in your wishlist'], 400);
         }
 
