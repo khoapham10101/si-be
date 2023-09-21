@@ -1,4 +1,5 @@
-## Installation Project Shopinvest
+# Shopinvest API
+## Installation
 
 1. Run ```mkdir data && docker-compose up -d```
 2. Connect to php: ```docker-compose exec www bash``` and connect to database: ```docker-compose db www bash```
@@ -11,3 +12,22 @@
 9. Run ```php artisan module:seed Role``` to seeding default data for default Role table
 10. Run ```php artisan module:seed User``` to seeding default data for default User table
 11. Run ```php artisan storage:link```  to save files for public
+
+## Shopinvest Running Tests
+This project uses PHPUnit for running tests. You can run tests using the `php artisan test` command. Here are some examples:
+
+### Run All Tests
+
+To run all tests in your application, simply use the following command:
+
+```bash
+php artisan test
+```
+
+### Run Tests for a Specific File
+
+For example, to run tests in the Modules/Wishlist/Tests/Feature/WishlistControllerTest.php file (which is used for testing features in the Wishlist module), use the following command:
+
+```bash
+php artisan test Modules/Wishlist/Tests/Feature/WishlistControllerTest.php
+```

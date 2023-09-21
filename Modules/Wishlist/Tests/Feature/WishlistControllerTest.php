@@ -1,75 +1,112 @@
 <?php
 
-namespace Tests\Unit;
+namespace Modules\Wishlist\Tests;
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Product\Entities\Product;
-use Modules\User\Entities\User;
-use Modules\Wishlist\Entities\Wishlist;
 use Tests\TestCase;
 use Modules\Auth\Database\Factories\UserFactory;
+use Modules\Product\Database\Factories\ProductFactory;
 
 class WishlistControllerTest extends TestCase
 {
-    use DatabaseTransactions; // Use this to run tests within a database transaction
     private $user;
+    private $product;
     protected function setUp(): void
     {
         parent::setUp();
-        $this->user = UserFactory::new()->create();
 
-        // You may set up any necessary data for your tests here.
+        $this->user = UserFactory::new()->create();
+        $this->product = ProductFactory::new()->create();
+    }
+
+    /**
+     * Test list wishlist
+     */
+    public function test_list_wishlist()
+    {
+        // Login
+        $response = $this->post('/api/v1/login', [
+            'email' => $this->user->email,
+            'password' => 'password',
+        ]);
+
+        // Create wishlist
+        $response = $this->postJson("/api/v1/wishlist/create/{$this->product->id}");
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'id',
+            'user_id',
+            'user' => [],
+            'product_id',
+            'product' => []
+        ]);
+
+        $listWishlist = $this->post('/api/v1/wishlist');
+        $listWishlist->assertStatus(200);
+        $listWishlist->assertJson([
+            'data' => [
+                [
+                    'user_id' => $this->user->id,
+                    'product_id' => $this->product->id,
+                ]
+            ]
+        ]);
+
+        // Logout
+        $this->post('/api/v1/logout');
     }
 
     /**
      * Test creating a new wishlist.
      */
-    public function testCreateWishlist()
+    public function test_create_wishlist()
     {
-        // Create a product for testing
-        $product = Product::factory()->create();
+        // Login
+        $response = $this->post('/api/v1/login', [
+            'email' => $this->user->email,
+            'password' => 'password',
+        ]);
 
-        // Send a POST request to the 'store' endpoint with valid data
-        $response = $this->actingAs($this->user)
-            ->json('POST', '/api/v1/wishlist/create' . $product->id);
-
-        // Assert that the response status is HTTP 201 (Created)
+        // Create wishlist
+        $response = $this->postJson("/api/v1/wishlist/create/{$this->product->id}");
         $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'id',
+            'user_id',
+            'user' => [],
+            'product_id',
+            'product' => []
+        ]);
 
-        // You can add more assertions to check the response data, database state, etc.
+        // Logout
+        $this->post('/api/v1/logout');
     }
 
-    /**
-     * Test deleting a wishlist item.
-     */
-    public function testDeleteWishlist()
+    public function test_remove_wishlist()
     {
-        // Create a user for testing
-        $user = User::factory()->create();
-
-        // Create a product for testing
-        $product = Product::factory()->create();
-
-        // Create a wishlist item for the user
-        $wishlistItem = Wishlist::factory()->create([
-            'user_id' => $user->id,
-            'product_id' => $product->id,
+        // Login
+        $response = $this->post('/api/v1/login', [
+            'email' => $this->user->email,
+            'password' => 'password',
         ]);
 
-        // Send a DELETE request to the 'delete' endpoint
-        $response = $this->actingAs($user)
-            ->json('DELETE', '/api/v1/wishlist/delete' . $product->id);
+        // Create wishlist
+        $response = $this->postJson("/api/v1/wishlist/create/{$this->product->id}");
 
-        // Assert that the response status is HTTP 204 (No Content)
-        $response->assertStatus(204);
-
-        // Ensure the wishlist item is deleted from the database
-        $this->assertDatabaseMissing('wishlist', [
-            'user_id' => $user->id,
-            'product_id' => $product->id,
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'id',
+            'user_id',
+            'user' => [],
+            'product_id',
+            'product' => []
         ]);
+
+        // Remove wishlist
+        $remove = $this->delete("/api/v1/wishlist/delete/{$this->product->id}");
+        $remove->assertStatus(204);
+
+        // Logout
+        $this->post('/api/v1/logout');
     }
 
-    // You can add more test methods for other controller actions here.
 }
