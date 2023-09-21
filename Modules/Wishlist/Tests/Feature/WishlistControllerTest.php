@@ -2,35 +2,30 @@
 
 namespace Modules\Wishlist\Tests;
 
-use Tests\TestCase;
-use Modules\Auth\Database\Factories\UserFactory;
 use Modules\Product\Database\Factories\ProductFactory;
+use Tests\TestCase;
+use Modules\User\Database\Factories\UserFactory;
+use Modules\Wishlist\Entities\Wishlist;
 
 class WishlistControllerTest extends TestCase
 {
     private $user;
-    private $product;
-    protected function setUp(): void
+    private $product1;
+    private $product2;
+
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->user = UserFactory::new()->create();
-        $this->product = ProductFactory::new()->create();
+        $this->product1 = ProductFactory::new()->create();
+        $this->product2 = ProductFactory::new()->create();
     }
 
-    /**
-     * Test list wishlist
-     */
-    public function test_list_wishlist()
+    public function test_user_can_get_list_wishlist()
     {
-        // Login
-        $response = $this->post('/api/v1/login', [
-            'email' => $this->user->email,
-            'password' => 'password',
-        ]);
-
-        // Create wishlist
-        $response = $this->postJson("/api/v1/wishlist/create/{$this->product->id}");
+        // Wishlist1
+        $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'id',
@@ -40,34 +35,37 @@ class WishlistControllerTest extends TestCase
             'product' => []
         ]);
 
-        $listWishlist = $this->post('/api/v1/wishlist');
-        $listWishlist->assertStatus(200);
-        $listWishlist->assertJson([
+        // Wishlist2
+        $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product2->id}");
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'id',
+            'user_id',
+            'user' => [],
+            'product_id',
+            'product' => []
+        ]);
+
+        // Get wishlist
+        $response = $this->actingAs($this->user)->post('/api/v1/wishlist');
+        $response->assertStatus(200);
+        $response->assertJson([
             'data' => [
                 [
                     'user_id' => $this->user->id,
-                    'product_id' => $this->product->id,
+                    'product_id' => $this->product1->id,
+                ],
+                [
+                    'user_id' => $this->user->id,
+                    'product_id' => $this->product2->id,
                 ]
             ]
         ]);
-
-        // Logout
-        $this->post('/api/v1/logout');
     }
 
-    /**
-     * Test creating a new wishlist.
-     */
-    public function test_create_wishlist()
+    public function test_user_can_add_wishlist()
     {
-        // Login
-        $response = $this->post('/api/v1/login', [
-            'email' => $this->user->email,
-            'password' => 'password',
-        ]);
-
-        // Create wishlist
-        $response = $this->postJson("/api/v1/wishlist/create/{$this->product->id}");
+        $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'id',
@@ -76,22 +74,12 @@ class WishlistControllerTest extends TestCase
             'product_id',
             'product' => []
         ]);
-
-        // Logout
-        $this->post('/api/v1/logout');
     }
 
-    public function test_remove_wishlist()
+    public function test_user_can_remove_wishlist()
     {
-        // Login
-        $response = $this->post('/api/v1/login', [
-            'email' => $this->user->email,
-            'password' => 'password',
-        ]);
-
         // Create wishlist
-        $response = $this->postJson("/api/v1/wishlist/create/{$this->product->id}");
-
+        $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'id',
@@ -102,11 +90,13 @@ class WishlistControllerTest extends TestCase
         ]);
 
         // Remove wishlist
-        $remove = $this->delete("/api/v1/wishlist/delete/{$this->product->id}");
+        $remove = $this->delete("/api/v1/wishlist/delete/{$this->product1->id}");
         $remove->assertStatus(204);
-
-        // Logout
-        $this->post('/api/v1/logout');
     }
 
+    public function tearDown(): void
+    {
+        $this->user->tokens()->delete();
+        parent::tearDown();
+    }
 }

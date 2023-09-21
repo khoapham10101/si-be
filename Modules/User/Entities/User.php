@@ -11,10 +11,11 @@ use Laravel\Sanctum\HasApiTokens;
 use Modules\Gender\Entities\Gender;
 use Modules\Role\Entities\Role;
 use Modules\UserStatus\Entities\UserStatus;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'users';
 
