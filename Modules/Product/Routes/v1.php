@@ -26,6 +26,14 @@ Route::group([
             Route::get('/single/{productId}', 'show');
             Route::post('/update/{productId}', 'update')->name('Update Product')->middleware('can:admin.products.edit');
             Route::delete('/delete/{productId}', 'delete')->name('Delete Product')->middleware('can:admin.products.destroy');
+            Route::post('/{productId}/deleteImage', 'deleteImageProduct')->name('Delete Image Product');
+        });
+    });
+
+    Route::group(['prefix' => 'public'], function () {
+        Route::prefix('/products')->controller(ProductController::class)->group(function () {
+            Route::post('/', 'index');
+            Route::get('/single/{productId}', 'show');
         });
     });
 

@@ -4,6 +4,8 @@ namespace Modules\Role\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Role\Entities\Role;
+use Modules\Role\Observers\RoleObserver;
 
 class RoleServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,8 @@ class RoleServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        Role::observe(RoleObserver::class);
     }
 
     /**

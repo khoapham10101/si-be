@@ -4,6 +4,8 @@ namespace Modules\UserStatus\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\UserStatus\Entities\UserStatus;
+use Modules\UserStatus\Observers\UserStatusObserver;
 
 class UserStatusServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,8 @@ class UserStatusServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        UserStatus::observe(UserStatusObserver::class);
     }
 
     /**

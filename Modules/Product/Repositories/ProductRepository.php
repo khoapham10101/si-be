@@ -54,10 +54,9 @@ class ProductRepository extends BaseRepository
      */
     public function update($product, $data)
     {
-        $this->deleteFileStorage($product);
         $this->updateData($product, $data);
 
-        $dataFiles = [];
+        $dataFiles = json_decode($product->images) ?? [];
         if (isset($data['images']) && $data['images']) {
             foreach ($data['images'] as $file) {
                 $path = Storage::disk('public')->put(Product::PATH_FILE, $file);
@@ -77,13 +76,37 @@ class ProductRepository extends BaseRepository
      * @param Product $product
      * @return Product
      */
-    public function deleteFileStorage($product)
+    public function deleteFilesStorage($product)
     {
         if (!empty(json_decode($product->images))) {
             foreach (json_decode($product->images) as $path) {
-                if (File::exists('storage/'. $path)) {
-                    File::delete('storage/'. $path);
-                }
+               $this->deleteFileStorage($path);
+            }
+        }
+    }
+
+    public function deleteImageProduct($product, $path)
+    {
+        $dataFiles = json_decode($product->images) ?? [];
+
+        $dataFiles= collect($dataFiles)->filter(function ($item) use($path){
+            return $item != $path;
+        })->values()->all();
+        $this->deleteFileStorage($path);
+
+        $product->images = json_encode($dataFiles);
+        $product->push();
+    }
+
+    /**
+     * @param Product $product
+     * @return Product
+     */
+    public function deleteFileStorage($path)
+    {
+        if ($path) {
+            if (File::exists('storage/'. $path)) {
+                File::delete('storage/'. $path);
             }
         }
     }

@@ -4,6 +4,8 @@ namespace Modules\Brand\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Modules\Brand\Entities\Brand;
+use Modules\Brand\Observers\BrandObserver;
 
 class BrandServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,8 @@ class BrandServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        Brand::observe(BrandObserver::class);
     }
 
     /**
