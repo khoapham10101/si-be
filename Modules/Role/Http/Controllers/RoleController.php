@@ -3,6 +3,7 @@
 namespace Modules\Role\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Modules\Role\Http\Requests\RoleCreate;
 use Modules\Role\Http\Requests\RoleList;
 use Modules\Role\Http\Resources\RoleResource;
@@ -24,9 +25,12 @@ class RoleController extends Controller
 
         $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
 
-        $query = $roleRepository->getQuery();
+        $data = Cache::tags(['list-roles'])->rememberForever('list-roles.' . $pagination['per_page'] .'.'. $pagination['current_page'], function () use ($roleRepository, $pagination) {
+            return $roleRepository->getQuery()
+                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+        });
 
-        return RoleResource::collection($query->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']));
+        return RoleResource::collection($data);
     }
 
     /**

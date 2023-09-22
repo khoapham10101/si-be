@@ -19,12 +19,12 @@ Route::group([
 ], function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::prefix('/userStatus')->controller(UserStatusController::class)->group(function () {
-            Route::post('/', 'index')->middleware('can:admin.role_statuses.index');
-            Route::post('/create', 'store')->name('Create User Status')->middleware('can:admin.role_statuses.create');
+            Route::post('/', 'index')->middleware('can:admin.user_statuses.index');
+            Route::post('/create', 'store')->name('Create User Status')->middleware('can:admin.user_statuses.create');
             Route::post('/dropdown', 'dropdown');
             Route::get('/single/{userStatusId}', 'show');
-            Route::patch('/update/{userStatusId}', 'update')->name('Update User Status')->middleware('can:admin.role_statuses.edit');
-            Route::delete('/delete/{userStatusId}', 'delete')->name('Delete User Status')->middleware('can:admin.role_statuses.destroy');
+            Route::patch('/update/{userStatusId}', 'update')->name('Update User Status')->middleware('can:admin.user_statuses.edit');
+            Route::delete('/delete/{userStatusId}', 'delete')->name('Delete User Status')->middleware('can:admin.user_statuses.destroy');
         });
     });
 });

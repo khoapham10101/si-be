@@ -3,7 +3,8 @@
 namespace Modules\Wishlist\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
+use Modules\Wishlist\Entities\Wishlist;
+use Modules\WishList\Observers\WishListObserver;
 
 class WishlistServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,8 @@ class WishlistServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+
+        Wishlist::observe(WishListObserver::class);
     }
 
     /**

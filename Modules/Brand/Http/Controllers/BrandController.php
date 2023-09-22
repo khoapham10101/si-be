@@ -4,9 +4,8 @@ namespace Modules\Brand\Http\Controllers;
 
 use App\Traits\NameDropDown;
 use App\Traits\PaginationRequest;
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Modules\Brand\Http\Requests\BrandCreate;
 use Modules\Brand\Http\Requests\BrandUpdate;
 use Modules\Brand\Http\Resources\BrandResource;
@@ -27,10 +26,13 @@ class BrandController extends Controller
         $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
         $sort = $data['sort'] ?? [];
 
-        $query = $brandRepository->getQuery()
-            ->orderBy('name');
+        $data = Cache::tags(['list-brands'])->remember('list-brands.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($brandRepository, $pagination) {
+            return $brandRepository->getQuery()
+                    ->orderBy('name')
+                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+        });
 
-        return BrandResource::collection($query->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']));
+        return BrandResource::collection($data);
     }
 
     /**

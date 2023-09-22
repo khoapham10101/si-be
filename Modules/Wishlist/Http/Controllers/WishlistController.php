@@ -3,13 +3,11 @@
 namespace Modules\Wishlist\Http\Controllers;
 
 use App\Traits\PaginationRequest;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Modules\Product\Entities\Product;
-use Modules\User\Entities\User;
-use Modules\Wishlist\Http\Requests\WishlistCreate;
 use Modules\Wishlist\Http\Resources\WishlistResource;
 use Modules\Wishlist\Repositories\WishlistRepository;
 
@@ -28,9 +26,12 @@ class WishlistController extends Controller
         $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
         $sort = $data['sort'] ?? [];
 
-        $query = $wishlistRepository->getQuery();
+        $data = Cache::tags(['wishLists'])->remember('wishLists.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($wishlistRepository, $pagination) {
+            return $wishlistRepository->getQuery()
+                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+        });
 
-        return WishlistResource::collection($query->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']));
+        return WishlistResource::collection($data);
     }
 
     /**

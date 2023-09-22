@@ -3,7 +3,9 @@
 namespace Modules\Product\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cache;
 use Modules\Product\Http\Requests\CreateProductRequest;
+use Modules\Product\Http\Requests\DeleteImageProductRequest;
 use Modules\Product\Http\Requests\ListProductRequest;
 use Modules\Product\Http\Requests\UpdateProductRequest;
 use Modules\Product\Http\Resources\ProductResource;
@@ -24,9 +26,12 @@ class ProductController extends Controller
         $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
         $sort = $data['sort'] ?? [];
 
-        $query = $productRepository->getQuery();
+        $data = Cache::tags(['list-products'])->remember('list-products.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($productRepository, $pagination) {
+            return $productRepository->getQuery()
+                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+        });
 
-        return ProductResource::collection($query->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']));
+        return ProductResource::collection($data);
     }
 
     /**
@@ -92,5 +97,26 @@ class ProductController extends Controller
             return response()->json(['message' => sprintf('Product %s not found', $productId)], 404);
         }
         return response()->json(ProductResource::make($product));
+    }
+
+    /**
+     * Get single product
+     *
+     * @return JsonResponse
+     */
+    public function deleteImageProduct(DeleteImageProductRequest $request, ProductRepository $productRepository, $productId)
+    {
+        $data = $request->validated();
+        $path = $data['path'];
+
+        $product = $productRepository->getQuery()->find($productId);
+        if (!$product) {
+            return response()->json(['message' => sprintf('Product %s not found', $productId)], 404);
+        }
+
+        $productRepository->deleteImageProduct($product, $path);
+        return response()->json([
+            'message' => 'Deleted image successfully'
+        ], 200);
     }
 }

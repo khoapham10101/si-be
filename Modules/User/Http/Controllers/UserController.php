@@ -2,10 +2,8 @@
 
 namespace Modules\User\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Modules\User\Http\Requests\UserCreate;
 use Modules\User\Http\Requests\UserList;
 use Modules\User\Http\Requests\UserUpdate;
@@ -27,9 +25,12 @@ class UserController extends Controller
         $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
         $sort = $data['sort'] ?? [];
 
-        $query = $userRepository->getQuery();
+        $data = Cache::tags(['list-users'])->remember('list-users.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($userRepository, $pagination) {
+            return $userRepository->getQuery()
+                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+        });
 
-        return UserResource::collection($query->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']));
+        return UserResource::collection($data);
     }
 
     /**

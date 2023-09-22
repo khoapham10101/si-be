@@ -4,6 +4,7 @@ namespace Modules\Cart\Repositories;
 
 use App\Repositories\BaseRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Cache;
 use Modules\Brand\Entities\Brand;
 use Modules\Cart\Entities\Cart;
 
@@ -28,9 +29,14 @@ class CartRepository extends BaseRepository
      */
     public function listCarts(string $userId)
     {
-        return $this->getQuery()
+        $carts = Cache::remember('carts:' . $userId, now()->addMinutes(60), function () use ($userId) {
+            return $this->getQuery()
                 ->where('user_id', $userId)
+                ->latest()
                 ->get();
+        });
+
+        return $carts;
     }
 
     /**
