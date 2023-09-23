@@ -54,9 +54,9 @@ class ProductRepository extends BaseRepository
      */
     public function update($product, $data)
     {
+        $dataFiles = json_decode($product->images) ?? [];
         $this->updateData($product, $data);
 
-        $dataFiles = json_decode($product->images) ?? [];
         if (isset($data['images']) && $data['images']) {
             foreach ($data['images'] as $file) {
                 $path = Storage::disk('public')->put(Product::PATH_FILE, $file);
