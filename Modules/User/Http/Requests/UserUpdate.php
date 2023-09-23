@@ -37,7 +37,7 @@ class UserUpdate extends FormRequest
             'avatar' => 'nullable|string',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
-            'user_status_id ' => 'required|numeric'
+            'user_status_id' => 'required|numeric'
         ];
     }
 

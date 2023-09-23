@@ -34,7 +34,7 @@ class UserCreate extends FormRequest
             'avatar' => 'nullable|string',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
-            'user_status_id ' => 'required|numeric',
+            'user_status_id' => 'required|numeric',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|max:20|regex:/^[A-Za-z\d@$!%*?&.]{8,}$/',
         ];
