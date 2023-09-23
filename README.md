@@ -13,21 +13,29 @@
 10. Run ```php artisan module:seed User``` to seeding default data for default User table
 11. Run ```php artisan storage:link```  to save files for public
 
-## Shopinvest Running Tests
-This project uses PHPUnit for running tests. You can run tests using the `php artisan test` command. Here are some examples:
+## Shopinvest Run Tests
+This project uses PHPUnit for running tests.
 
 ### Run All Tests
 
 To run all tests in your application, simply use the following command:
 
 ```bash
-php artisan test
+vendor/bin/phpunit
 ```
 
 ### Run Tests for a Specific File
 
-For example, to run tests in the Modules/Wishlist/Tests/Feature/WishlistControllerTest.php file (which is used for testing features in the Wishlist module), use the following command:
+#### Test a full test file:
 
 ```bash
-php artisan test Modules/Wishlist/Tests/Feature/WishlistControllerTest.php
+vendor/bin/phpunit --filter 'WishlistControllerTest' 
 ```
+
+If you want to only run a single test method, class or module you can use the filter flag:
+
+```bash
+vendor/bin/phpunit --filter 'test_user_can_get_list_wishlist'
+```
+
+
