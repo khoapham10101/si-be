@@ -3,6 +3,7 @@
 namespace Modules\Auth\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\User\Rules\CheckBirthDay;
 
 class RegisterRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class RegisterRequest extends FormRequest
             'last_name' => 'required|string',
             'id_card' => 'required|string',
             'email' => 'required|email|unique:users,email',
-            'birthday' => 'required|date-format:Y/m/d',
+            'birthday' => ['nullable', 'date', new CheckBirthDay],
             'gender_id' => 'required|numeric|exists:genders,id',
             'password' => 'required|min:8|max:20|regex:/^[A-Za-z\d@$!%*?&.]{8,}$/'
         ];

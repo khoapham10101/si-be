@@ -29,6 +29,10 @@ class UserRepository extends BaseRepository
         $user = new User;
 
         $this->updateData($user, $data);
+        if (isset($data['avatar']) && $data['avatar']->isValid()) {
+            $avatarPath = $data['avatar']->store('uploads', 'public');
+            $user->avatar = $avatarPath;
+        }
         $user->password = Hash::make($data['password']);
         $user->push();
 

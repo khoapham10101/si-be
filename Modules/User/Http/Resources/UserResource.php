@@ -25,7 +25,7 @@ class UserResource extends BaseResource
             'gender' => GenderResource::make($this->whenLoaded('gender')),
             'id_1' => $this->id_1,
             'id_2' => $this->id_2,
-            'avatar' => $this->avatar,
+            'avatar' => $this->avatar ? asset('storage/' . $this->avatar) : null,
             'phone' => $this->phone,
             'address' => $this->address,
             'user_status_id' => $this->user_status_id,
