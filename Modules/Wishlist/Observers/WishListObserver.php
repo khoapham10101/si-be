@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\WishList\Observers;
+namespace Modules\Wishlist\Observers;
 
 use Illuminate\Support\Facades\Cache;
-use Modules\WishList\Entities\WishList;
+use Modules\Wishlist\Entities\WishList;
 
 class WishListObserver
 {

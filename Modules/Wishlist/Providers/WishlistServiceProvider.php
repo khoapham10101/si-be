@@ -4,7 +4,7 @@ namespace Modules\Wishlist\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Modules\Wishlist\Entities\Wishlist;
-use Modules\WishList\Observers\WishListObserver;
+use Modules\Wishlist\Observers\WishListObserver;
 
 class WishlistServiceProvider extends ServiceProvider
 {
