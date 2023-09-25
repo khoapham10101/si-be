@@ -21,3 +21,4 @@ si_custom.log
 si_error.logdata
 data
 si_error.log
+redis/dump.rdb
