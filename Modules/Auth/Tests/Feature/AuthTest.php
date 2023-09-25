@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Auth\Tests;
+namespace Modules\Auth\Tests\Feature;
 
 use Tests\TestCase;
 use Modules\Auth\Database\Factories\UserFactory;

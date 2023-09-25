@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\UserStatus\Tests;
+namespace Modules\UserStatus\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Role\Database\Factories\RoleFactory;

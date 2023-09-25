@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Permission\Tests;
+namespace Modules\Permission\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Modules\Permission\Database\Factories\PermissionFactory;

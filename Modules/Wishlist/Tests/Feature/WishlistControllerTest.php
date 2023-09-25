@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Wishlist\Tests;
+namespace Modules\Wishlist\Tests\Feature;
 
 use Modules\Product\Database\Factories\ProductFactory;
 use Tests\TestCase;
