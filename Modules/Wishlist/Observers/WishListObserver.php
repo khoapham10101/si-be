@@ -15,7 +15,7 @@ class WishListObserver
      */
     public function created(WishList $wishList)
     {
-        Cache::tags(['wishLists'])->flush();
+        Cache::tags(['wishLists'. $wishList->user_id])->flush();
     }
 
     /**
@@ -26,7 +26,7 @@ class WishListObserver
      */
     public function updated(WishList $wishList)
     {
-        Cache::tags(['wishLists'])->flush();
+        Cache::tags(['wishLists'. $wishList->user_id])->flush();
     }
 
     /**
@@ -37,7 +37,7 @@ class WishListObserver
      */
     public function deleted(WishList $wishList)
     {
-        Cache::tags(['wishLists'])->flush();
+        Cache::tags(['wishLists'. $wishList->user_id])->flush();
     }
 
     /**
@@ -48,7 +48,7 @@ class WishListObserver
      */
     public function restored(WishList $wishList)
     {
-        Cache::tags(['wishLists'])->flush();
+        Cache::tags(['wishLists'. $wishList->user_id])->flush();
     }
 
     /**

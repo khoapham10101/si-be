@@ -25,9 +25,9 @@ class Cart extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function updateProductQuantity()
+    public function updateProductQuantity(int $quantity): int
     {
-        return $this->increment('quantity');
+        return $this->increment('quantity', $quantity);
     }
 
 }

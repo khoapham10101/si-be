@@ -40,6 +40,7 @@ class CreateProductRequest extends FormRequest
             ],
             'description' => 'nullable',
             'warranty_information' => 'nullable',
+            'delivery_infomation' => 'nullable',
             'quantity' => 'nullable|numeric',
             'price' => 'nullable|numeric',
             'images' => 'nullable'

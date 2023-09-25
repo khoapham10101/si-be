@@ -22,11 +22,14 @@ class WishlistController extends Controller
     {
         $data = $request->validated();
 
+        $user = $request->user();
+        $userId = $user->id;
+
         $filters = $data['filters'] ?? [];
         $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
         $sort = $data['sort'] ?? [];
 
-        $data = Cache::tags(['wishLists'])->remember('wishLists.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($wishlistRepository, $pagination) {
+        $data = Cache::tags(['wishLists'. $userId])->remember('wishLists.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($wishlistRepository, $pagination) {
             return $wishlistRepository->getQuery()
                     ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
         });

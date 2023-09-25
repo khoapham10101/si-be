@@ -30,6 +30,7 @@ class AddToCartRequest extends FormRequest
                 'required',
                 Rule::exists($product->getTable(), $product->getKeyName())->withoutTrashed(),
             ],
+            'quantity'  => 'nullable|numeric'
         ];
     }
 }
