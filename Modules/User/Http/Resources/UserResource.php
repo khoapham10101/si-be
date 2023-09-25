@@ -4,6 +4,7 @@ namespace Modules\User\Http\Resources;
 
 use App\Resources\BaseResource;
 use Modules\Gender\Http\Resources\GenderResource;
+use Modules\Role\Http\Resources\RoleResource;
 use Modules\UserStatus\Http\Resources\UserStatusResource;
 
 class UserResource extends BaseResource
@@ -30,6 +31,7 @@ class UserResource extends BaseResource
             'address' => $this->address,
             'user_status_id' => $this->user_status_id,
             'user_status' => UserStatusResource::make($this->whenLoaded('userStatus')),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'email' => $this->email,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

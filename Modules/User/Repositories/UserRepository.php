@@ -5,6 +5,7 @@ namespace Modules\User\Repositories;
 use App\Repositories\BaseRepository;
 use Modules\User\Entities\User;
 use Illuminate\Support\Facades\Hash;
+use Modules\Role\Entities\Role;
 
 class UserRepository extends BaseRepository
 {
@@ -15,7 +16,7 @@ class UserRepository extends BaseRepository
     public function getQuery()
     {
         return User::query()->with([
-            'gender', 'userStatus'
+            'gender', 'userStatus', 'roles'
         ]);
     }
 
@@ -35,6 +36,9 @@ class UserRepository extends BaseRepository
         }
         $user->password = Hash::make($data['password']);
         $user->push();
+
+        // Asssign role to user when add new
+        $user->roles()->attach(Role::where('name', 'user')->first());
 
         /** @var User $refreshed */
         $refreshed = $this->getQuery()->find($user->id);
