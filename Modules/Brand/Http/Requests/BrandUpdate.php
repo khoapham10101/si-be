@@ -27,7 +27,7 @@ class BrandUpdate extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|required|string'
+            'name' => 'sometimes|required|string|unique:brands,name'
         ];
     }
 

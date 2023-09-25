@@ -19,12 +19,12 @@ Route::group([
 ], function () {
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::prefix('/brands')->controller(BrandController::class)->group(function () {
-            Route::post('/', 'index');
-            Route::post('/create', 'store')->name('Create Brand');
+            Route::post('/', 'index')->middleware('can:admin.brands.index');
+            Route::post('/create', 'store')->name('Create Brand')->middleware('can:admin.brands.create');
             Route::post('/dropdown', 'dropdown');
             Route::get('/single/{brandId}', 'show');
-            Route::patch('/update/{brandId}', 'update')->name('Update Brand');
-            Route::delete('/delete/{brandId}', 'delete')->name('Delete Brand');
+            Route::patch('/update/{brandId}', 'update')->name('Update Brand')->middleware('can:admin.brands.edit');
+            Route::delete('/delete/{brandId}', 'delete')->name('Delete Brand')->middleware('can:admin.brands.destroy');
         });
     });
 });
