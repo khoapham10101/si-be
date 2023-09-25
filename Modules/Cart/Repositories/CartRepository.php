@@ -52,10 +52,9 @@ class CartRepository extends BaseRepository
             ->first();
 
         if ($cart) {
-            $cart->updateProductQuantity();
+            $cart->updateProductQuantity($data['quantity']);
 
         } else {
-            $data['quantity'] = 1;
             $cart = new Cart();
             $this->updateData($cart, $data);
             $cart->push();

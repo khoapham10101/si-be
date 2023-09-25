@@ -22,6 +22,7 @@ class ProductResource extends BaseResource
             'description'   => $this->description,
             'price' => $this->price,
             'quantity'  => $this->quantity,
+            'delivery_infomation'  => $this->delivery_infomation,
             'warranty_information'  => $this->warranty_information,
             'images' => $this->product_images,
             'created_at' => $this->created_at,

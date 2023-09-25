@@ -42,6 +42,7 @@ class UpdateProductRequest extends FormRequest
             ],
             'description' => 'nullable',
             'warranty_information' => 'nullable',
+            'delivery_infomation' => 'nullable',
             'quantity' => 'nullable|numeric',
             'price' => 'nullable|numeric',
             'id_2' => 'nullable|string',

@@ -37,6 +37,7 @@ class CartController extends Controller
         $data = $request->validated();
         $user = $request->user();
         $data['user_id']  = $user->id;
+        $data['quantity'] = $data['quantity'] ?? 1;
 
         $addToCart = $cartRepository->add($data);
 

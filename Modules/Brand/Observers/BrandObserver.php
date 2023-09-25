@@ -15,7 +15,7 @@ class BrandObserver
      */
     public function created(Brand $brand)
     {
-        // Cache::tags(['list-brands'])->flush();
+        Cache::tags(['list-brands'])->flush();
     }
 
     /**
