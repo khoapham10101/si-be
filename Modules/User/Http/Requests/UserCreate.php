@@ -3,6 +3,7 @@
 namespace Modules\User\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\User\Rules\CheckBirthDay;
 
 class UserCreate extends FormRequest
 {
@@ -27,12 +28,12 @@ class UserCreate extends FormRequest
             'first_name' => 'required|string',
             'last_name' => 'required|string',
             'id_card' => 'required|string',
-            'birthday' => 'nullable|date',
+            'birthday' => ['nullable', 'date', new CheckBirthDay],
             'gender_id' => 'nullable|numeric',
             'id_1' => 'nullable|string',
             'id_2' => 'nullable|string',
-            'avatar' => 'nullable|string',
-            'phone' => 'nullable|string',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'phone' => 'nullable|string|unique:users,phone',
             'address' => 'nullable|string',
             'user_status_id' => 'required|numeric',
             'email' => 'required|email|unique:users,email',
