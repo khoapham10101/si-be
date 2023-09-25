@@ -4,6 +4,7 @@ namespace Modules\Cart\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Modules\Cart\Http\Requests\AddToCartRequest;
 use Modules\Cart\Http\Requests\AddToCartUpdateRequest;
