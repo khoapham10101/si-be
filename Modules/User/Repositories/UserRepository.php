@@ -54,6 +54,10 @@ class UserRepository extends BaseRepository
     public function update($user, $data)
     {
         $this->updateData($user, $data);
+        if (isset($data['avatar']) && $data['avatar']->isValid()) {
+            $avatarPath = $data['avatar']->store('uploads', 'public');
+            $user->avatar = $avatarPath;
+        }
         $user->push();
 
         /** @var User $refreshed */
