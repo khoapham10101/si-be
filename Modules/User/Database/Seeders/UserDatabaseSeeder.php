@@ -4,6 +4,7 @@ namespace Modules\User\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Modules\Gender\Entities\Gender;
 use Modules\Role\Entities\Role;
 use Modules\User\Entities\User;
 use Modules\UserStatus\Entities\UserStatus;
@@ -24,34 +25,23 @@ class UserDatabaseSeeder extends Seeder
         $adminRole = Role::find(1);
 
         // Administrator
-        $adminREC = User::create([
-            'first_name' => 'REC',
+        $adminSI = User::create([
+            'first_name' => 'SI',
             'last_name' => 'Administrator',
-            'email' => 'admin@rec.com',
-            'password' => bcrypt('Rec2023!'),
+            'email' => 'admin@si.com',
+            'password' => bcrypt('Si2023!@'),
             'id_card'  => '123456789',
+            'birthday' => '1990-09-09',
+            'gender_id' => Gender::male()->id,
+            'phone' => '0987654321',
+            'address' => 'VN',
             'user_status_id'   => UserStatus::active()->id,
             'email_verified_at' => now()
         ]);
 
 
         if ($adminRole) {
-            $adminRole->users()->attach($adminREC);
+            $adminRole->users()->attach($adminSI);
         }
-        // // Saler
-        // User::create([
-        //     'name' => 'Saler REC',
-        //     'email' => 'saler@rec.com',
-        //     'password' => bcrypt('Rec2023!'),
-        //     'email_verified_at' => now(),
-        // ]);
-
-        // // Simple User
-        // User::create([
-        //     'name' => 'Simple User REC',
-        //     'email' => 'user@rec.com',
-        //     'password' => bcrypt('Rec2023!'),
-        //     'email_verified_at' => now(),
-        // ]);
     }
 }

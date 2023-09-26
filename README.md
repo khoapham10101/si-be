@@ -7,11 +7,8 @@
 4. Run ```php artisan key:generate``` to create application key
 5. Run ```composer update``` to install all package required
 6. Run ```php artisan module:migrate``` to migrate table for database
-7. Run ```php artisan module:seed UserStatus``` to seeding default data for default User Status table
-8. Run ```php artisan module:seed Gender``` to seeding default data for default Gender table
-9. Run ```php artisan module:seed Role``` to seeding default data for default Role table
-10. Run ```php artisan module:seed User``` to seeding default data for default User table
-11. Run ```php artisan storage:link```  to save files for public
+7. Run ```php artisan db:seed``` to seeding default data for default
+8. Run ```php artisan storage:link```  to save files for public
 
 ## Shopinvest Run Tests
 This project uses PHPUnit for running tests.
