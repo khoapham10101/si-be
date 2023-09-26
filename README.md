@@ -1,38 +1,30 @@
-# Shopinvest API
-## Installation
+# Shop Invest
 
-1. Run ```mkdir data && docker-compose up -d```
-2. Connect to php: ```docker-compose exec www bash``` and connect to database: ```docker-compose db www bash```
-3. Run ```cp .env.example .env``` to copy env example file to env file and change configuration information for project
-4. Run ```php artisan key:generate``` to create application key
-5. Run ```composer update``` to install all package required
-6. Run ```php artisan module:migrate``` to migrate table for database
-7. Run ```php artisan db:seed``` to seeding default data for default
-8. Run ```php artisan storage:link```  to save files for public
+API platform.
 
-## Shopinvest Run Tests
-This project uses PHPUnit for running tests.
+## Getting Started
 
-### Run All Tests
+Clone the git repository on your local machine.
 
-To run all tests in your application, simply use the following command:
+### Prerequisites
 
+To can develop we need to install on the local machine:
+
+1. Unix OS
+2. [Docker CE](https://www.docker.com/community-edition)
+3. [To run docker as non root](https://docs.docker.com/install/linux/linux-postinstall/)
+4. [Docker Compose](https://docs.docker.com/compose/install/)
+5. Install make command: 
+```sudo apt install make``` OR ```brew install make```
+### Installing
+To get the project up and running you need to go in the root directory of the project and do the following command:
 ```bash
-vendor/bin/phpunit
+make build
 ```
 
-### Run Tests for a Specific File
+### Develop
 
-#### Test a full test file:
-
+#### Run testing code
 ```bash
-vendor/bin/phpunit --filter 'WishlistControllerTest' 
+make test
 ```
-
-If you want to only run a single test method, class or module you can use the filter flag:
-
-```bash
-vendor/bin/phpunit --filter 'test_user_can_get_list_wishlist'
-```
-
-
