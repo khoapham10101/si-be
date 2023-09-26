@@ -5,7 +5,6 @@ namespace Modules\Role\Observers;
 use Illuminate\Support\Facades\Cache;
 use Modules\Role\Entities\Role;
 
-
 class RoleObserver
 {
     /**
@@ -16,7 +15,7 @@ class RoleObserver
      */
     public function created(Role $role)
     {
-       Cache::tags(['list-roles'])->flush();
+        Cache::tags(['list-roles'])->flush();
     }
 
     /**
@@ -62,5 +61,4 @@ class RoleObserver
     {
         Cache::tags(['list-roles'])->flush();
     }
-
 }

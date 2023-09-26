@@ -41,5 +41,4 @@ class UserUpdate extends FormRequest
             'user_status_id' => 'sometimes|required|numeric'
         ];
     }
-
 }

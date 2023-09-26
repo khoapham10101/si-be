@@ -28,7 +28,6 @@ class PermissionController extends Controller
                     'name' => $permission->name,
                     'action' => $permission->action
                 ];
-
             }
         }
 

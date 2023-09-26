@@ -23,14 +23,18 @@ class UserStatusController extends Controller
         $data = $request->validated();
 
         $filters = $data['filters'] ?? [];
-        $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
+        $pagination = $data['pagination'] ?? array('per_page' => 15, 'current_page' => 1);
         $sort = $data['sort'] ?? [];
 
-        $data = Cache::tags(['list-userStatus'])->rememberForever('list-userStatus.' . $pagination['per_page'] .'.'. $pagination['current_page'], function () use ($userStatusRepository, $pagination) {
-            return $userStatusRepository->getQuery()
-                    ->orderBy('name')
-                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
-        });
+        $data = Cache::tags(['list-userStatus'])
+            ->rememberForever(
+                'list-userStatus.' . $pagination['per_page'] . '.' . $pagination['current_page'],
+                function () use ($userStatusRepository, $pagination) {
+                    return $userStatusRepository->getQuery()
+                        ->orderBy('name')
+                        ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+                }
+            );
 
         return UserStatusResource::collection($data);
     }
@@ -82,7 +86,9 @@ class UserStatusController extends Controller
 
         $userStatus = $userStatusRepository->getQuery()->find($userStatusId);
         if (!$userStatus) {
-            return response()->json(['success' => false, 'message' => sprintf('User Status %s not found', $userStatusId)], 404);
+            return response()->json([
+                'success' => false, 'message' => sprintf('User Status %s not found', $userStatusId)
+            ], 404);
         }
 
         $data = $request->validated();
@@ -100,7 +106,9 @@ class UserStatusController extends Controller
     {
         $userStatus = $userStatusRepository->getQuery()->find($userStatusId);
         if (!$userStatus) {
-            return response()->json(['success' => false, 'message' => sprintf('User Status %s not found', $userStatusId)], 404);
+            return response()->json([
+                'success' => false, 'message' => sprintf('User Status %s not found', $userStatusId)
+            ], 404);
         }
 
         $userStatus->delete();

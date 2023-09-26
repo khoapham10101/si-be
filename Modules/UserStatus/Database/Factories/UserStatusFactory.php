@@ -16,4 +16,3 @@ class UserStatusFactory extends Factory
         ];
     }
 }
-

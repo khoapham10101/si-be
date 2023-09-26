@@ -23,12 +23,16 @@ class RoleController extends Controller
     {
         $data = $request->validated();
 
-        $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
+        $pagination = $data['pagination'] ?? array('per_page' => 15, 'current_page' => 1);
 
-        $data = Cache::tags(['list-roles'])->rememberForever('list-roles.' . $pagination['per_page'] .'.'. $pagination['current_page'], function () use ($roleRepository, $pagination) {
-            return $roleRepository->getQuery()
-                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
-        });
+        $data = Cache::tags(['list-roles'])
+            ->rememberForever(
+                'list-roles.' . $pagination['per_page'] . '.' . $pagination['current_page'],
+                function () use ($roleRepository, $pagination) {
+                    return $roleRepository->getQuery()
+                        ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+                }
+            );
 
         return RoleResource::collection($data);
     }

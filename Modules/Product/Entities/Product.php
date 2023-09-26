@@ -29,8 +29,10 @@ class Product extends Model
      */
     public function getProductImagesAttribute()
     {
-        if (!$this->images) return [];
-        return array_map(function($item) {
+        if (!$this->images) {
+            return [];
+        }
+        return array_map(function ($item) {
             return [
                 'path'  => $item ? $item : null,
                 'url' => $item ? config('app.url_image') . $item : null,
@@ -46,5 +48,4 @@ class Product extends Model
         }
         return $user->wishlists()->where('product_id', $this->id)->exists();
     }
-
 }

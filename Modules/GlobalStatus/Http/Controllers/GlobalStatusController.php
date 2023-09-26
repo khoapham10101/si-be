@@ -12,7 +12,7 @@ use Modules\GlobalStatus\Repositories\GlobalStatusRepository;
 
 class GlobalStatusController extends Controller
 {
-   /**
+    /**
      * Get all global status
      *
      * @return JsonResponse
@@ -22,13 +22,15 @@ class GlobalStatusController extends Controller
         $data = $request->validated();
 
         $filters = $data['filters'] ?? [];
-        $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
+        $pagination = $data['pagination'] ?? array('per_page' => 15, 'current_page' => 1);
         $sort = $data['sort'] ?? [];
 
         $query = $globalStatusRepository->getQuery()
             ->orderBy('name');
 
-        return GlobalStatusResource::collection($query->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']));
+        return GlobalStatusResource::collection(
+            $query->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page'])
+        );
     }
 
     /**

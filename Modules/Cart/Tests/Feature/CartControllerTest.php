@@ -22,7 +22,7 @@ class CartControllerTest extends TestCase
         $this->user = UserFactory::new()->create();
     }
 
-    public function test_user_can_get_list_carts()
+    public function testUserCanGetListCarts()
     {
         $this->actingAs($this->user);
 
@@ -64,7 +64,7 @@ class CartControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_add_to_cart()
+    public function testUserCanAddProductToCart()
     {
         $this->actingAs($this->user);
 
@@ -98,7 +98,7 @@ class CartControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_add_to_cart_without_validate_pass()
+    public function testUserCannotAddProductToCartWithoutValidatePass()
     {
         $this->actingAs($this->user);
 
@@ -111,7 +111,7 @@ class CartControllerTest extends TestCase
         $response->assertJsonValidationErrors('product_id');
     }
 
-    public function test_user_can_update_multiple_carts()
+    public function testUserCanUpdateMultipleCarts()
     {
         $this->actingAs($this->user);
 
@@ -180,7 +180,7 @@ class CartControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_update_multiple_carts_when_cart_does_not_exist()
+    public function testUserCanUpdateMultipleCartsWhenCartDoesNotExist()
     {
         $this->actingAs($this->user);
 
@@ -254,7 +254,7 @@ class CartControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_delete_cart()
+    public function testUserCanDeleteCart()
     {
         $this->actingAs($this->user);
 

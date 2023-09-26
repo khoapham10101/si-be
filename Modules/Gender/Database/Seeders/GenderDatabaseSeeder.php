@@ -19,7 +19,7 @@ class GenderDatabaseSeeder extends Seeder
             'Male',
             'Female',
             'Other',
-        ])->each(function($name) {
+        ])->each(function ($name) {
             if (!Gender::query()->where('name', $name)->exists()) {
                 $status = new Gender;
                 $status->name = $name;

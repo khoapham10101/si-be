@@ -5,7 +5,6 @@ namespace Modules\User\Observers;
 use Illuminate\Support\Facades\Cache;
 use Modules\User\Entities\User;
 
-
 class UserObserver
 {
     /**
@@ -16,7 +15,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-       Cache::tags(['list-users'])->flush();
+        Cache::tags(['list-users'])->flush();
     }
 
     /**
@@ -62,5 +61,4 @@ class UserObserver
     {
         Cache::tags(['list-users'])->flush();
     }
-
 }

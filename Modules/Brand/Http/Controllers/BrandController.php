@@ -23,14 +23,19 @@ class BrandController extends Controller
         $data = $request->validated();
 
         $filters = $data['filters'] ?? [];
-        $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
+        $pagination = $data['pagination'] ?? array('per_page' => 15, 'current_page' => 1);
         $sort = $data['sort'] ?? [];
 
-        $data = Cache::tags(['list-brands'])->remember('list-brands.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($brandRepository, $pagination) {
-            return $brandRepository->getQuery()
-                    ->orderBy('name')
-                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
-        });
+        $data = Cache::tags(['list-brands'])
+            ->remember(
+                'list-brands.' . $pagination['per_page'] . '.' . $pagination['current_page'],
+                now()->addMinutes(30),
+                function () use ($brandRepository, $pagination) {
+                    return $brandRepository->getQuery()
+                        ->orderBy('name')
+                        ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+                }
+            );
 
         return BrandResource::collection($data);
     }

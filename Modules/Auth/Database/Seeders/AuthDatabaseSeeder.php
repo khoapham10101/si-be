@@ -14,6 +14,5 @@ class AuthDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
     }
 }

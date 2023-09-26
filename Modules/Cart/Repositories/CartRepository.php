@@ -53,7 +53,6 @@ class CartRepository extends BaseRepository
 
         if ($cart) {
             $cart->updateProductQuantity($data['quantity']);
-
         } else {
             $cart = new Cart();
             $this->updateData($cart, $data);
@@ -93,5 +92,4 @@ class CartRepository extends BaseRepository
             ->whereNotIn('id', $cartIdExists)
             ->delete();
     }
-
 }

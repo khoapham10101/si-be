@@ -63,7 +63,7 @@ class PermissionControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_get_list_permissions()
+    public function testUserCanGetListPermissions()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();

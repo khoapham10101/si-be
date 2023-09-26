@@ -18,7 +18,7 @@ class GlobalStatusDatabaseSeeder extends Seeder
         collect([
             'Active',
             'Inactive',
-        ])->each(function($name) {
+        ])->each(function ($name) {
             if (!GlobalStatus::query()->where('name', $name)->exists()) {
                 $status = new GlobalStatus;
                 $status->name = $name;

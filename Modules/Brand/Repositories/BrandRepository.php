@@ -60,14 +60,13 @@ class BrandRepository extends BaseRepository
         if (!empty($data['name'] ?? null)) {
             $fields = ['name'];
 
-            $query->where(function($query) use ($fields, $data) {
+            $query->where(function ($query) use ($fields, $data) {
                 foreach ($fields as $field) {
-                    $query->orWhere($field, 'like' , '%'. $data['name'] .'%');
+                    $query->orWhere($field, 'like', '%'. $data['name'] .'%');
                 }
             });
         }
 
         return $query->limit(config('app.dropdown.limit'))->get();
     }
-
 }

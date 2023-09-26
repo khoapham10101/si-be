@@ -26,13 +26,18 @@ class WishlistController extends Controller
         $userId = $user->id;
 
         $filters = $data['filters'] ?? [];
-        $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
+        $pagination = $data['pagination'] ?? array('per_page' => 15, 'current_page' => 1);
         $sort = $data['sort'] ?? [];
 
-        $data = Cache::tags(['wishLists'. $userId])->remember('wishLists.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($wishlistRepository, $pagination) {
-            return $wishlistRepository->getQuery()
-                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
-        });
+        $data = Cache::tags(['wishLists' . $userId])
+            ->remember(
+                'wishLists.' . $pagination['per_page'] . '.' . $pagination['current_page'],
+                now()->addMinutes(30),
+                function () use ($wishlistRepository, $pagination) {
+                    return $wishlistRepository->getQuery()
+                        ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+                }
+            );
 
         return WishlistResource::collection($data);
     }
@@ -46,7 +51,9 @@ class WishlistController extends Controller
     {
         $product = Product::find($productId);
         if (is_null($product)) {
-            return response()->json(['success' => false, 'message' => sprintf('Product %s not found', $productId)], 404);
+            return response()->json([
+                'success' => false, 'message' => sprintf('Product %s not found', $productId)
+            ], 404);
         }
 
         $wishlist = $wishlistRepository->findByProductId(Auth::user()->id, $productId);
@@ -72,12 +79,14 @@ class WishlistController extends Controller
         $wishlist = $wishlistRepository->getQuery()->where('product_id', $productId)->first();
 
         if (!$wishlist) {
-            return response()->json(['success' => false, 'message' => sprintf('Product %s not found in your wishlist', $productId)], 404);
+            return response()->json([
+                'success' => false,
+                'message' => sprintf('Product %s not found in your wishlist', $productId)
+            ], 404);
         }
 
         $wishlist->delete();
 
         return response()->json(null, 204);
     }
-
 }

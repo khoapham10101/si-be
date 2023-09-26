@@ -25,7 +25,8 @@ Route::group([
             Route::post('/dropdown', 'dropdown');
             Route::get('/single/{productId}', 'show');
             Route::post('/update/{productId}', 'update')->name('Update Product')->middleware('can:admin.products.edit');
-            Route::delete('/delete/{productId}', 'delete')->name('Delete Product')->middleware('can:admin.products.destroy');
+            Route::delete('/delete/{productId}', 'delete')
+                ->name('Delete Product')->middleware('can:admin.products.destroy');
             Route::post('/{productId}/deleteImage', 'deleteImageProduct')->name('Delete Image Product');
         });
     });
@@ -36,6 +37,4 @@ Route::group([
             Route::get('/single/{productId}', 'show');
         });
     });
-
 });
-

@@ -44,5 +44,4 @@ class CheckBirthDay implements Rule
     {
         return 'The birthday must be at least 12 years before the current date.';
     }
-
 }

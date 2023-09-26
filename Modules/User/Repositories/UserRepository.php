@@ -64,5 +64,4 @@ class UserRepository extends BaseRepository
         $refreshed = $this->getQuery()->find($user->id);
         return $refreshed;
     }
-
 }

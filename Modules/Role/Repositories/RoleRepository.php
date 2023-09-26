@@ -75,5 +75,4 @@ class RoleRepository extends BaseRepository
         $refreshed = $this->getQuery()->find($role->id);
         return $refreshed;
     }
-
 }

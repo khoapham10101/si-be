@@ -18,7 +18,7 @@ class UserStatusDatabaseSeeder extends Seeder
         collect([
             'Active',
             'Inactive',
-        ])->each(function($name) {
+        ])->each(function ($name) {
             if (!UserStatus::query()->where('name', $name)->exists()) {
                 $status = new UserStatus;
                 $status->name = $name;

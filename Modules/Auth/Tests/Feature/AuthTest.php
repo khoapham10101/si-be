@@ -4,6 +4,7 @@ namespace Modules\Auth\Tests\Feature;
 
 use Tests\TestCase;
 use Modules\Auth\Database\Factories\UserFactory;
+
 /**
  * Tests for AuthController.
  * php artisan test Modules/Auth/Tests/Feature/AuthTest.php
@@ -19,7 +20,7 @@ class AuthTest extends TestCase
         $this->user = UserFactory::new()->create();
     }
 
-    public function test_user_can_login_with_valid_credentials()
+    public function testUserCanLoginWithValidCredentials()
     {
         $response = $this->post('/api/v1/login', [
             'email' => $this->user->email,
@@ -35,7 +36,7 @@ class AuthTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_login_with_invalid_credentials()
+    public function testUserCannotLoginWithInvalidCredentials()
     {
         $response = $this->post('/api/v1/login', [
             'email' => $this->user->email,
@@ -45,7 +46,7 @@ class AuthTest extends TestCase
         $response->assertStatus(401);
     }
 
-    public function test_user_can_logout()
+    public function testUserCanLogout()
     {
         $token = $this->user->createToken('testToken')->plainTextToken;
 

@@ -30,5 +30,4 @@ class UserStatusUpdate extends FormRequest
             'name' => 'sometimes|required|string'
         ];
     }
-
 }

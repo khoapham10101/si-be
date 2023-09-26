@@ -13,7 +13,7 @@ use Modules\Product\Repositories\ProductRepository;
 
 class ProductController extends Controller
 {
-/**
+    /**
      * Get all Products
      *
      * @return JsonResponse
@@ -23,13 +23,18 @@ class ProductController extends Controller
         $data = $request->validated();
 
         $filters = $data['filters'] ?? [];
-        $pagination = $data['pagination'] ?? array('per_page'=>15, 'current_page'=>1);
+        $pagination = $data['pagination'] ?? array('per_page' => 15, 'current_page' => 1);
         $sort = $data['sort'] ?? [];
 
-        $data = Cache::tags(['list-products'])->remember('list-products.' . $pagination['per_page'] .'.'. $pagination['current_page'], now()->addMinutes(30), function () use ($productRepository, $pagination) {
-            return $productRepository->getQuery()
-                    ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
-        });
+        $data = Cache::tags(['list-products'])
+            ->remember(
+                'list-products.' . $pagination['per_page'] . '.' . $pagination['current_page'],
+                now()->addMinutes(30),
+                function () use ($productRepository, $pagination) {
+                    return $productRepository->getQuery()
+                        ->paginate($pagination['per_page'] ?: 999999999, ['*'], 'page', $pagination['current_page']);
+                }
+            );
 
         return ProductResource::collection($data);
     }
@@ -37,7 +42,7 @@ class ProductController extends Controller
     /**
      * Create a new Product
      *
-    * @return JsonResponse
+     * @return JsonResponse
      */
     public function store(CreateProductRequest $request, ProductRepository $productRepository)
     {
@@ -59,7 +64,9 @@ class ProductController extends Controller
 
         $product = $productRepository->getQuery()->find($productId);
         if (!$product) {
-            return response()->json(['success' => false, 'message' => sprintf('Product %s not found', $productId)], 404);
+            return response()->json([
+                'success' => false, 'message' => sprintf('Product %s not found', $productId)
+            ], 404);
         }
 
         $product = $productRepository->update($product, $data);
@@ -77,7 +84,9 @@ class ProductController extends Controller
 
         $product = $productRepository->getQuery()->find($productId);
         if (!$product) {
-            return response()->json(['success' => false, 'message' => sprintf('Product %s not found', $productId)], 404);
+            return response()->json([
+                'success' => false, 'message' => sprintf('Product %s not found', $productId)
+            ], 404);
         }
 
         $productRepository->deleteFileStorage($product);
@@ -104,8 +113,11 @@ class ProductController extends Controller
      *
      * @return JsonResponse
      */
-    public function deleteImageProduct(DeleteImageProductRequest $request, ProductRepository $productRepository, $productId)
-    {
+    public function deleteImageProduct(
+        DeleteImageProductRequest $request,
+        ProductRepository $productRepository,
+        $productId
+    ) {
         $data = $request->validated();
         $path = $data['path'];
 

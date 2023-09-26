@@ -80,7 +80,7 @@ class ProductRepository extends BaseRepository
     {
         if (!empty(json_decode($product->images))) {
             foreach (json_decode($product->images) as $path) {
-               $this->deleteFileStorage($path);
+                $this->deleteFileStorage($path);
             }
         }
     }
@@ -89,7 +89,7 @@ class ProductRepository extends BaseRepository
     {
         $dataFiles = json_decode($product->images) ?? [];
 
-        $dataFiles= collect($dataFiles)->filter(function ($item) use($path){
+        $dataFiles= collect($dataFiles)->filter(function ($item) use ($path) {
             return $item != $path;
         })->values()->all();
         $this->deleteFileStorage($path);
@@ -110,5 +110,4 @@ class ProductRepository extends BaseRepository
             }
         }
     }
-
 }

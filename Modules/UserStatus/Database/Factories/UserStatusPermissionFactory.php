@@ -18,4 +18,3 @@ class UserStatusPermissionFactory extends Factory
         ];
     }
 }
-

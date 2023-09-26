@@ -29,5 +29,4 @@ class DeleteImageProductRequest extends FormRequest
             'path' => 'required'
         ];
     }
-
 }

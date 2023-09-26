@@ -30,11 +30,13 @@ class AuthServiceProvider extends ServiceProvider
 
             if ($user && $user->roles) {
                 foreach ($user->roles as $role) {
-                    if (!$role->permissions) continue;
+                    if (!$role->permissions) {
+                        continue;
+                    }
 
                     foreach ($role->permissions as $permssion) {
                         // Permission exists will pass middleware
-                        Gate::define($permssion->action, function (){
+                        Gate::define($permssion->action, function () {
                             return true;
                         });
                     }

@@ -64,7 +64,7 @@ class ProductControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_get_list_products()
+    public function testUserCanGetListProducts()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -99,7 +99,7 @@ class ProductControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_get_list_products_without_permission()
+    public function testUserCannotGetListProductsWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -112,7 +112,7 @@ class ProductControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_add_product()
+    public function testUserCanAddProduct()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -136,7 +136,7 @@ class ProductControllerTest extends TestCase
         $response->assertJsonFragment(['name' => 'Product 1']);
     }
 
-    public function test_user_cannot_add_product_without_validate_pass()
+    public function testUserCannotAddProductWithoutValidatePass()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -161,7 +161,7 @@ class ProductControllerTest extends TestCase
         $response->assertJsonValidationErrors(['name']);
     }
 
-    public function test_user_cannot_add_product_when_the_sku_already_exits()
+    public function testUserCannotAddProductWhenTheSkuAlreadyExits()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -198,7 +198,7 @@ class ProductControllerTest extends TestCase
         $response->assertJsonValidationErrors('sku');
     }
 
-    public function test_user_cannot_add_user_without_permission()
+    public function testUserCannotAddProductWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -225,7 +225,7 @@ class ProductControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_update_product()
+    public function testUserCanUpdateProduct()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -264,7 +264,7 @@ class ProductControllerTest extends TestCase
         $response->assertJsonFragment(['name' => 'Product 1 edit']);
     }
 
-    public function test_user_can_delete_product()
+    public function testUserCanDeleteProduct()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -294,7 +294,7 @@ class ProductControllerTest extends TestCase
         $remove->assertStatus(204);
     }
 
-    public function test_user_cannot_delete_product_when_does_not_exist()
+    public function testUserCannotDeleteProductWhenDoesNotExist()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();

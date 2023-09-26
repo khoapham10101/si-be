@@ -63,7 +63,7 @@ class BrandControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_get_list_brands()
+    public function testUserCanGetListBrands()
     {
         $response = $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -93,7 +93,7 @@ class BrandControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_add_brand()
+    public function testUserCanAddBrand()
     {
         $this->setUpCommonData();
 
@@ -105,7 +105,7 @@ class BrandControllerTest extends TestCase
         $response->assertJsonFragment(['name' => 'My brand']);
     }
 
-    public function test_user_cannot_add_brand_without_validate_pass()
+    public function testUserCannotAddBrandWithoutValidatePass()
     {
         $this->setUpCommonData();
 
@@ -117,7 +117,7 @@ class BrandControllerTest extends TestCase
         $response->assertJsonValidationErrors('name');
     }
 
-    public function test_user_cannot_add_brand_if_they_have_the_same_name()
+    public function testUserCannotAddBrandIfTheyHaveTheSameName()
     {
         $this->setUpCommonData();
 
@@ -136,7 +136,7 @@ class BrandControllerTest extends TestCase
         $response->assertJsonValidationErrors('name');
     }
 
-    public function test_get_dropdown_brand()
+    public function testGetDropdownBrand()
     {
         $this->setUpCommonData();
 
@@ -172,7 +172,7 @@ class BrandControllerTest extends TestCase
         ]);
     }
 
-    public function test_update_a_brand()
+    public function testUpdateABrand()
     {
         $response = $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -195,7 +195,7 @@ class BrandControllerTest extends TestCase
         $response->assertJsonFragment(['name' => 'My brand edit']);
     }
 
-    public function test_user_can_delete_brand()
+    public function testUserCanDeleteBrand()
     {
         $response = $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -215,7 +215,7 @@ class BrandControllerTest extends TestCase
         $remove->assertStatus(204);
     }
 
-    public function test_user_cannot_delete_brand_when_does_not_exist()
+    public function testUserCannotDeleteBrandWhenDoesNotExist()
     {
         $response = $this->actingAs($this->user);
         $this->setUpCommonData();

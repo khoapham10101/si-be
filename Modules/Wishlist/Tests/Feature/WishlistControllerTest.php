@@ -22,7 +22,7 @@ class WishlistControllerTest extends TestCase
         $this->product2 = ProductFactory::new()->create();
     }
 
-    public function test_user_can_get_list_wishlist()
+    public function testUserCanGetListWishlist()
     {
         // Wishlist1
         $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
@@ -63,7 +63,7 @@ class WishlistControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_add_wishlist()
+    public function testUserCanAddWishlist()
     {
         // Create wishlist
         $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
@@ -77,7 +77,7 @@ class WishlistControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_add_a_wishlist_when_have_previously_added_a_wishlist()
+    public function testUserCannotAddAProductToWishlistWhenHaveAdded()
     {
         // Create wishlist
         $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
@@ -99,7 +99,7 @@ class WishlistControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_remove_wishlist()
+    public function testUserCanRemoveWishlist()
     {
         // Create wishlist
         $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");

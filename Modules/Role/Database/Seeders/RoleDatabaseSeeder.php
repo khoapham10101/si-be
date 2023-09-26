@@ -24,7 +24,7 @@ class RoleDatabaseSeeder extends Seeder
             'admin',
             'seller',
             'user',
-        ])->each(function($name) {
+        ])->each(function ($name) {
             if (!Role::query()->where('name', $name)->exists()) {
                 $obj = new Role;
                 $obj->name = $name;
@@ -41,5 +41,4 @@ class RoleDatabaseSeeder extends Seeder
             }
         }
     }
-
 }

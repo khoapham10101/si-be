@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Resources;
 
 use Carbon\Carbon;
@@ -78,7 +79,7 @@ class BaseResource extends JsonResource
     {
         if (func_num_args() === 1) {
             return $this->objWhenLoaded($this, $relationship);
-        } else if (func_num_args() === 2) {
+        } elseif (func_num_args() === 2) {
             return $this->objWhenLoaded($this, $relationship, $value);
         }
         return $this->objWhenLoaded($this, $relationship, $value, $default);
@@ -90,7 +91,7 @@ class BaseResource extends JsonResource
 
         if (func_num_args() === 2) {
             return $this->when($isLoaded, $obj);
-        } else if (func_num_args() === 3) {
+        } elseif (func_num_args() === 3) {
             return $this->when($isLoaded, $value);
         }
         return $this->when($isLoaded, $value, $default);
@@ -118,7 +119,11 @@ class BaseResource extends JsonResource
         $arrRelationship = explode('.', $relationship);
         foreach ($arrRelationship as $relationshipPart) {
             if ($obj instanceof Collection) {
-                $isLoaded = $isLoaded && ($obj->isEmpty() || array_key_exists($relationshipPart, $obj->first()->getAttributes()) || $obj->first()->relationLoaded($relationshipPart));
+                $isLoaded = $isLoaded && (
+                    $obj->isEmpty()
+                    || array_key_exists($relationshipPart, $obj->first()->getAttributes())
+                    || $obj->first()->relationLoaded($relationshipPart)
+                );
                 if ($isLoaded) {
                     $obj = $obj->pluck($relationshipPart)->filter();
                     if ($obj->first() instanceof Collection) {
@@ -126,7 +131,10 @@ class BaseResource extends JsonResource
                     }
                 }
             } else {
-                $isLoaded = $isLoaded && $obj && (array_key_exists($relationshipPart, $obj->getAttributes()) || $obj->relationLoaded($relationshipPart));
+                $isLoaded = $isLoaded && $obj && (
+                    array_key_exists($relationshipPart, $obj->getAttributes())
+                    || $obj->relationLoaded($relationshipPart)
+                );
                 if ($isLoaded) {
                     $obj = $obj->{$relationshipPart};
                     if ($obj instanceof Collection) {

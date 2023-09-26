@@ -5,7 +5,6 @@ namespace Modules\Product\Observers;
 use Illuminate\Support\Facades\Cache;
 use Modules\Product\Entities\Product;
 
-
 class ProductObserver
 {
     /**
@@ -16,7 +15,7 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-       Cache::tags(['list-products'])->flush();
+        Cache::tags(['list-products'])->flush();
     }
 
     /**
@@ -62,5 +61,4 @@ class ProductObserver
     {
         Cache::tags(['list-products'])->flush();
     }
-
 }

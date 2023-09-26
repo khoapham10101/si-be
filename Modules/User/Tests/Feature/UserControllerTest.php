@@ -63,7 +63,7 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_get_list_users()
+    public function testUserCanGetListUsers()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -117,7 +117,7 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_get_list_users_without_permission()
+    public function testUserCannotGetListUsersWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -130,7 +130,7 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_add_user()
+    public function testUserCanDddUser()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -155,7 +155,7 @@ class UserControllerTest extends TestCase
         $response->assertJsonFragment(['full_name' => 'John Doe']);
     }
 
-    public function test_user_cannot_add_user_without_validate_pass()
+    public function testUserCannotDddUserWithoutValidatePass()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -181,7 +181,7 @@ class UserControllerTest extends TestCase
         $response->assertJsonValidationErrors(['first_name', 'last_name']);
     }
 
-    public function test_user_cannot_add_user_when_the_email_already_exits()
+    public function testUserCannotAddUserWhenTheEmailAlreadyExits()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -225,7 +225,7 @@ class UserControllerTest extends TestCase
         $response->assertJsonValidationErrors('email');
     }
 
-    public function test_user_cannot_add_user_without_permission()
+    public function testUserCannotAddUserWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -253,7 +253,7 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_update_user()
+    public function testUserCanUpdateUser()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -299,7 +299,7 @@ class UserControllerTest extends TestCase
         $response->assertJsonFragment(['full_name' => 'Anna Smith']);
     }
 
-    public function test_user_can_delete_user()
+    public function testUserCanDeleteUser()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -330,7 +330,7 @@ class UserControllerTest extends TestCase
         $remove->assertStatus(204);
     }
 
-    public function test_user_cannot_delete_user_when_does_not_exist()
+    public function testUserCannotDeleteUserWhenDoesNotExist()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();

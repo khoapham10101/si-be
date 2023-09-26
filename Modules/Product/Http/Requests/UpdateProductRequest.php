@@ -38,7 +38,8 @@ class UpdateProductRequest extends FormRequest
             'sku' => [
                 'required',
                 'string',
-                Rule::unique($product->getConnectionName() . '.' . $product->getTable())->ignore($request->route('productId'), 'id'),
+                Rule::unique($product->getConnectionName() . '.' . $product->getTable())
+                    ->ignore($request->route('productId'), 'id'),
             ],
             'description' => 'nullable',
             'warranty_information' => 'nullable',
@@ -49,5 +50,4 @@ class UpdateProductRequest extends FormRequest
             'images' => 'nullable'
         ];
     }
-
 }

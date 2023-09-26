@@ -23,9 +23,10 @@ Route::group([
             Route::post('/create', 'store')->name('Create User Status')->middleware('can:admin.user_statuses.create');
             Route::post('/dropdown', 'dropdown');
             Route::get('/single/{userStatusId}', 'show');
-            Route::patch('/update/{userStatusId}', 'update')->name('Update User Status')->middleware('can:admin.user_statuses.edit');
-            Route::delete('/delete/{userStatusId}', 'delete')->name('Delete User Status')->middleware('can:admin.user_statuses.destroy');
+            Route::patch('/update/{userStatusId}', 'update')->name('Update User Status')
+            ->middleware('can:admin.user_statuses.edit');
+            Route::delete('/delete/{userStatusId}', 'delete')->name('Delete User Status')
+            ->middleware('can:admin.user_statuses.destroy');
         });
     });
 });
-

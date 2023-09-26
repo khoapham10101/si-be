@@ -30,5 +30,4 @@ class BrandUpdate extends FormRequest
             'name' => 'sometimes|required|string|unique:brands,name'
         ];
     }
-
 }

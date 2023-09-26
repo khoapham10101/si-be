@@ -37,7 +37,6 @@ Route::group([
                 'uses' => 'destroy',
                 'middleware' => 'can:admin.roles.destroy',
             ]);
-
         });
     });
 });

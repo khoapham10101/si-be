@@ -17,7 +17,7 @@ class BrandDatabaseSeeder extends Seeder
         collect([
             'Brand 1',
             'Brand 2',
-        ])->each(function($name) {
+        ])->each(function ($name) {
             if (!Brand::query()->where('name', $name)->exists()) {
                 $status = new Brand;
                 $status->name = $name;

@@ -63,7 +63,7 @@ class UserStatusControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_get_list_user_status()
+    public function testUserCanGetListUserStatus()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -91,7 +91,7 @@ class UserStatusControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_get_list_user_status_without_permission()
+    public function testUserCannotGetListUserStatusWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -104,7 +104,7 @@ class UserStatusControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_add_user_status()
+    public function testUserCanAddUserStatus()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -117,7 +117,7 @@ class UserStatusControllerTest extends TestCase
         $response->assertJsonFragment(['name' => 'My user status']);
     }
 
-    public function test_user_cannot_add_user_status_without_validate_pass()
+    public function testUserCannotAddUserStatusWithoutValidatePass()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -131,7 +131,7 @@ class UserStatusControllerTest extends TestCase
         $response->assertJsonValidationErrors('name');
     }
 
-    public function test_user_cannot_add_user_status_without_permission()
+    public function testUserCannotAddUserStatusWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -147,7 +147,7 @@ class UserStatusControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_update_user_status()
+    public function testUserCanUpdateUserStatus()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -169,7 +169,7 @@ class UserStatusControllerTest extends TestCase
         $response->assertJsonFragment(['name' => 'My user status edit']);
     }
 
-    public function test_user_can_delete_user_status()
+    public function testUserCanDeleteUserStatus()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -188,7 +188,7 @@ class UserStatusControllerTest extends TestCase
         $remove->assertStatus(204);
     }
 
-    public function test_user_cannot_delete_user_status_when_does_not_exist()
+    public function testUserCannotDeleteUserStatusWhenDoesNotExist()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();

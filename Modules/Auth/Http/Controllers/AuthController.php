@@ -26,8 +26,8 @@ class AuthController extends Controller
         });
 
         // Check password
-        if(!$user || !Hash::check($request->password, $user->password)) {
-            return $this->errorResponse('Bad creds', 401);
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return $this->errorResponse('Bad credential', 401);
         }
 
         if (Auth::attempt($credentials)) {

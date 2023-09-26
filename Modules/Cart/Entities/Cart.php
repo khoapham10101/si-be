@@ -29,5 +29,4 @@ class Cart extends Model
     {
         return $this->increment('quantity', $quantity);
     }
-
 }

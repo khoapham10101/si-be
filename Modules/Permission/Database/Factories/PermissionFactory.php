@@ -18,4 +18,3 @@ class PermissionFactory extends Factory
         ];
     }
 }
-

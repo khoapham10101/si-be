@@ -63,7 +63,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_get_list_roles()
+    public function testUserCanGetListRoles()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -109,7 +109,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_get_list_roles_without_permission()
+    public function testUserCannotGetListRolesWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -122,7 +122,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_add_user()
+    public function testUserCanAddUser()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -150,7 +150,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_add_role_without_validate_pass()
+    public function testUserCannotAddRoleWithoutValidatePass()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -165,7 +165,7 @@ class RoleControllerTest extends TestCase
         $response->assertJsonValidationErrors(['name', 'list_permission']);
     }
 
-    public function test_user_cannot_add_role_without_permission()
+    public function testUserCannotAddRoleWithoutPermission()
     {
         $this->actingAs($this->user);
 
@@ -194,7 +194,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_update_role()
+    public function testUserCanUpdateRole()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -239,7 +239,7 @@ class RoleControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_delete_role()
+    public function testUserCanDeleteRole()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();
@@ -273,7 +273,7 @@ class RoleControllerTest extends TestCase
         $remove->assertStatus(200);
     }
 
-    public function test_user_cannot_delete_user_when_does_not_exist()
+    public function testUserCannotDeleteRoleWhenDoesNotExist()
     {
         $this->actingAs($this->user);
         $this->setUpCommonData();

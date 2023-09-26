@@ -17,7 +17,8 @@ return new class extends Migration
             $table->increments('id');
             $table->foreignId('brand_id')->index();
             $table->string('name');
-            $table->string('sku')->unique()->comment('Code Product');;
+            $table->string('sku')->unique()->comment('Code Product');
+            ;
             $table->longText('description')->nullable();
             $table->text('warranty_information')->nullable();
             $table->integer('quantity')->default(0);
