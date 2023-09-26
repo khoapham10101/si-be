@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="MyProject">
+    <description>My custom coding standard.</description>
+
+    <!-- Use PSR-2 as a base standard -->
+    <rule ref="PSR2"/>
+
+    <!-- If using Laravel sniffs -->
+    <!-- <rule ref="./vendor/doctrine/coding-standard/lib/Doctrine/ruleset.xml"/> -->
+
+    <!-- Directories to scan -->
+    <file>app/</file>
+    <file>Modules/</file>
+
+    <!-- Exclude some directories -->
+    <exclude-pattern>vendor/</exclude-pattern>
+</ruleset>
