@@ -30,7 +30,7 @@ class UserUpdate extends FormRequest
         return [
             'first_name' => 'sometimes|required|string',
             'last_name' => 'sometimes|required|string',
-            'id_card' => 'required|string',
+            'id_card' => 'sometimes|required|string',
             'birthday' => ['nullable', 'date', new CheckBirthDay],
             'gender_id' => 'nullable|numeric',
             'id_1' => 'nullable|string',
@@ -38,7 +38,7 @@ class UserUpdate extends FormRequest
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
-            'user_status_id' => 'required|numeric'
+            'user_status_id' => 'sometimes|required|numeric'
         ];
     }
 
