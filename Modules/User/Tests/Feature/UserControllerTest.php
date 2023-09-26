@@ -236,7 +236,7 @@ class UserControllerTest extends TestCase
         // Get the ID of the newly created user
         $newUserId = $response->json('id');
         // Edit user
-        $response = $this->patchJson("/api/v1/users/update/{$newUserId}", [
+        $response = $this->postJson("/api/v1/users/update/{$newUserId}", [
             'first_name' => 'Anna',
             'last_name' => 'Smith',
             'id_card' => '1234',
