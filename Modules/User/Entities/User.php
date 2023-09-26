@@ -12,6 +12,7 @@ use Modules\Gender\Entities\Gender;
 use Modules\Role\Entities\Role;
 use Modules\UserStatus\Entities\UserStatus;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Wishlist\Entities\Wishlist;
 
 class User extends Authenticatable
 {
@@ -88,5 +89,9 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
+    }
+    public function wishlists(): Relations\HasMany
+    {
+        return $this->hasMany(Wishlist::class);
     }
 }

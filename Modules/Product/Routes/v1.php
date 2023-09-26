@@ -37,11 +37,5 @@ Route::group([
         });
     });
 
-    Route::group(['prefix' => 'public'], function () {
-        Route::prefix('/products')->controller(ProductController::class)->group(function () {
-            Route::post('/', 'index');
-            Route::get('/single/{productId}', 'show');
-        });
-    });
 });
 
