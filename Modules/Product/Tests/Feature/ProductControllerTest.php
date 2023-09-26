@@ -161,6 +161,43 @@ class ProductControllerTest extends TestCase
         $response->assertJsonValidationErrors(['name']);
     }
 
+    public function test_user_cannot_add_product_when_the_sku_already_exits()
+    {
+        $this->actingAs($this->user);
+        $this->setUpCommonData();
+
+        // Craete brand
+        $brand = BrandFactory::new()->create([
+            'name' => 'Brand 1'
+        ]);
+
+        // Add new product
+        $response = $this->postJson('/api/v1/products/create', [
+            'name' => 'Product 1',
+            'brand_id' => $brand->id,
+            'sku' => '1234MVC',
+            'description' => '',
+            'warranty_information' => '',
+            'quantity' => '123',
+            'price' => '123'
+        ]);
+        $response->assertStatus(201);
+        $response->assertJsonFragment(['name' => 'Product 1']);
+
+        // Add new product again with the same sku
+        $response = $this->postJson('/api/v1/products/create', [
+            'name' => 'Product 1',
+            'brand_id' => $brand->id,
+            'sku' => '1234MVC',
+            'description' => '',
+            'warranty_information' => '',
+            'quantity' => '123',
+            'price' => '123'
+        ]);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors('sku');
+    }
+
     public function test_user_cannot_add_user_without_permission()
     {
         $this->actingAs($this->user);

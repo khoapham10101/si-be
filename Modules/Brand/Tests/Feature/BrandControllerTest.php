@@ -117,6 +117,25 @@ class BrandControllerTest extends TestCase
         $response->assertJsonValidationErrors('name');
     }
 
+    public function test_user_cannot_add_brand_if_they_have_the_same_name()
+    {
+        $this->setUpCommonData();
+
+        // Create a new brand
+        $response = $this->actingAs($this->user)->postJson('/api/v1/brands/create', [
+            'name' => 'My brand'
+        ]);
+        $response->assertStatus(201);
+        $response->assertJsonFragment(['name' => 'My brand']);
+
+        // Add new brand again with the same name
+        $response = $this->actingAs($this->user)->postJson('/api/v1/brands/create', [
+            'name' => 'My brand'
+        ]);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors('name');
+    }
+
     public function test_get_dropdown_brand()
     {
         $this->setUpCommonData();

@@ -181,6 +181,50 @@ class UserControllerTest extends TestCase
         $response->assertJsonValidationErrors(['first_name', 'last_name']);
     }
 
+    public function test_user_cannot_add_user_when_the_email_already_exits()
+    {
+        $this->actingAs($this->user);
+        $this->setUpCommonData();
+
+        // Add new user 1
+        $response = $this->actingAs($this->user)->postJson('/api/v1/users/create', [
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'id_card' => '1234',
+            'birthday' => '1999-09-09',
+            'gender_id' => 1,
+            'id_1' => '12345',
+            'id_2' => '56789',
+            'avatar' => '',
+            'phone' => '0987654321',
+            'address' => 'BMT, VN',
+            'user_status_id' => 1,
+            'email' => 'john@gmail.com', // email john@gmail.com
+            'password' => 'Si2023!@',
+        ]);
+        $response->assertStatus(201);
+        $response->assertJsonFragment(['full_name' => 'John Doe']);
+
+        // Add user 2
+        $response = $this->postJson('/api/v1/users/create', [
+            'first_name' => 'Anna',
+            'last_name' => 'Smith',
+            'id_card' => '1234',
+            'birthday' => '1998-09-09',
+            'gender_id' => 1,
+            'id_1' => '12345',
+            'id_2' => '56789',
+            'avatar' => '',
+            'phone' => '0987654322',
+            'address' => 'BMT, VN',
+            'user_status_id' => 1,
+            'email' => 'john@gmail.com', // email john@gmail.com
+            'password' => 'Si2023!@',
+        ]);
+        $response->assertStatus(422);
+        $response->assertJsonValidationErrors('email');
+    }
+
     public function test_user_cannot_add_user_without_permission()
     {
         $this->actingAs($this->user);

@@ -65,6 +65,7 @@ class WishlistControllerTest extends TestCase
 
     public function test_user_can_add_wishlist()
     {
+        // Create wishlist
         $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
         $response->assertStatus(201);
         $response->assertJsonStructure([
@@ -73,6 +74,28 @@ class WishlistControllerTest extends TestCase
             'user' => [],
             'product_id',
             'product' => []
+        ]);
+    }
+
+    public function test_user_cannot_add_a_wishlist_when_have_previously_added_a_wishlist()
+    {
+        // Create wishlist
+        $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'id',
+            'user_id',
+            'user' => [],
+            'product_id',
+            'product' => []
+        ]);
+
+        // Create wishlist again with the same product1 id
+        $response = $this->actingAs($this->user)->postJson("/api/v1/wishlist/create/{$this->product1->id}");
+        $response->assertStatus(400);
+        $response->assertJson([
+            'success' => false,
+            'message' => 'Product already in your wishlist'
         ]);
     }
 
