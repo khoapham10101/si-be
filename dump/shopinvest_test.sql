@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
--- Host: 172.31.0.2    Database: si
+-- Host: 172.31.0.2    Database: shopinvest_test
 -- ------------------------------------------------------
 -- Server version	8.0.30
 
